@@ -1,1 +1,0 @@
-{"name":"ali jixer","username":"jixerman","_id":"1648630758819505673","password":"$2b$15$WJbdo93ShkOYyNrimjb98u.m0GDjM/2R1QsYfJ8O0IJIFzJCGgFie"}

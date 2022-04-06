@@ -16,6 +16,21 @@ export default {
         } catch (error) {
           return []
         }
+      },
+      myTags: async (_, data, { user }) => {
+
+        console.log('lol')
+        return []
+        
+        try {
+  
+          const thisUser = await authorizeUser(user)
+
+          return await Tag.findUserTags(thisUser._id)
+
+        } catch (error) {
+          return []
+        }
       }
     },
     Expense: {

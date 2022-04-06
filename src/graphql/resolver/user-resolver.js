@@ -9,20 +9,7 @@ import authorizeUser from '../../lib/auth'
 
 export default {
   root: {
-    Me: {
-      myTags: async (_, data, { user }) => {
-        
-        try {
-  
-          const thisUser = await authorizeUser(user)
 
-          return await Tag.findUserTags(thisUser._id)
-
-        } catch (error) {
-          return []
-        }
-      }
-    }
   },
   Query: {
     me: async (_, data, {user}) => {
