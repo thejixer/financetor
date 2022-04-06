@@ -19,7 +19,7 @@ export default {
           return await Tag.findUserTags(thisUser._id)
 
         } catch (error) {
-          throw error
+          return []
         }
       }
     }
