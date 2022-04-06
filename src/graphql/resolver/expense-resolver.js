@@ -19,8 +19,7 @@ export default {
       },
       myTags: async (_, data, { user }) => {
 
-        console.log('lol')
-        return []
+
         
         try {
   
