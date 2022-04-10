@@ -60,7 +60,7 @@ class UserSchema {
   async findAll() {
     try {
 
-      if (!doesCacheneedsUpdate && cache) return cache
+      // if (!doesCacheneedsUpdate && cache) return cache
 
       const x = readdirSync(userDirectory)
         .reduce((acc, cur, i) => acc + `${i == 0 ? '' : ','}`+ readFileSync(path.join(userDirectory, `/${cur}/info.txt`), { encoding: "utf8" }), '[')
@@ -68,8 +68,8 @@ class UserSchema {
 
       const result = JSON.parse(y)
 
-      doesCacheneedsUpdate = false
-      cache = result
+      // doesCacheneedsUpdate = false
+      // cache = result
 
       return result
 
