@@ -76,7 +76,7 @@ class TagSchema {
 
       Object.entries(realData).forEach(([key, value]) => thatTag[key] = value)
 
-      writeFileSync(`${userDirectory}/${userId}/tags/${_id}`, JSON.stringify(thatTag), "utf8")
+      writeFileSync(`${userDirectory}/${userId}/tags/${_id}.txt`, JSON.stringify(thatTag), "utf8")
 
       return true
 
