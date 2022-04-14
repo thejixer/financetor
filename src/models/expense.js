@@ -1,6 +1,6 @@
 
 
-import { writeFileSync, existsSync, mkdirSync, readFileSync } from 'fs'
+import { writeFileSync, existsSync, mkdirSync, readFileSync, readdirSync } from 'fs'
 import path from 'path'
 
 import { UID } from '../lib'
