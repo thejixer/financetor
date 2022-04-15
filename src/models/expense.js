@@ -22,7 +22,7 @@ class ExpenseSchema {
 
       const cache = {}
 
-      userTags.forEach(item => cache[item.id] = item)
+      userTags.forEach(item => cache[item._id] = item)
 
       const doIContinue = tags.every(item => !!cache[item])
 
@@ -33,7 +33,6 @@ class ExpenseSchema {
       if (!existsSync(dest)) {
         mkdirSync(dest)
       }
-
 
       writeFileSync(`${dest}/${data._id}.txt`, JSON.stringify(data), "utf8")
 
