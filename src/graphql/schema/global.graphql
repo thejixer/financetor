@@ -1,5 +1,5 @@
-
 scalar Date
+scalar Upload
 
 type Token {
   token: String!
@@ -8,6 +8,20 @@ type Token {
 type Status {
   status: Int!
   msg: String!
+}
+
+type Address {
+  MunicipalityZone: Float!
+  Neighbourhood: String
+  FormattedAddress: String!
+  Place: String
+}
+
+input AddressInput {
+  MunicipalityZone: Float!
+  Neighbourhood: String
+  FormattedAddress: String!
+  Place: String
 }
 
 type Geo {

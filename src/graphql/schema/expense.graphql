@@ -1,11 +1,10 @@
-
-
 type Expense {
   _id: ID!
   amount: Float!
   tags: [Tag!]!
   geo: Geo!
   date: Date!
+  address: Address!
 }
 
 input ExpenseInfo {
@@ -13,6 +12,7 @@ input ExpenseInfo {
   geo: GeoInput!
   tags: [ID!]!
   date: Date!
+  address: AddressInput!
 }
 
 type Query {
@@ -22,4 +22,3 @@ type Query {
 type Mutation {
   create_expense(data: ExpenseInfo!): Status!
 }
-
