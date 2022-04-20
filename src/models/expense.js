@@ -1,9 +1,11 @@
-import { writeFileSync, existsSync, mkdirSync, readFileSync, readdirSync } from "fs";
+import { writeFileSync, existsSync, mkdirSync, readFileSync, readdirSync, unlink } from "fs";
 import path from "path";
 
 import { UID } from "../lib";
 
 import Tag from "./tag";
+
+console.log(unlink)
 
 const userDirectory = path.join(process.cwd(), "/src/db/users");
 
@@ -80,6 +82,18 @@ class ExpenseSchema {
       return JSON.parse(x);
     } catch (error) {
       throw error;
+    }
+  }
+
+  async deleteById({_id, userId}) {
+    try {
+
+      unlink(path.join(userDirectory, `/${userId}/expenses/${_id}.txt`))
+
+      return true
+      
+    } catch (error) {
+      throw new Error('no')
     }
   }
 }

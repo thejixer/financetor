@@ -59,7 +59,8 @@ export default {
     }
   },
   Mutation: {
-    create_expense: async (_, {data}, {user}) => {
+    create_expense: async (_, { data }, { user }) => {
+      
       try {
         
         const thisUser = await authorizeUser(user)
@@ -72,6 +73,22 @@ export default {
         }
 
 
+
+      } catch (error) {
+        throw error
+      }
+    },
+    delete_expense: async (_, { _id }, { user }) => {
+      try {
+        
+        const thisUser = await authorizeUser(user)
+
+        await Expense.deleteById({ userId: thisUser._id, _id })
+        
+        return {
+          msg: 'ok',
+          status: 200
+        }
 
       } catch (error) {
         throw error

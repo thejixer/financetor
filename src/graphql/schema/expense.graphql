@@ -21,4 +21,5 @@ type Query {
 
 type Mutation {
   create_expense(data: ExpenseInfo!): Status!
+  delete_expense(_id: ID!): Status!
 }

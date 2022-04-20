@@ -9,7 +9,7 @@ export default {
     
   },
   Query: {
-    getMyTags: (_, data, {user}) => {
+    getMyTags: async (_, data, {user}) => {
       try {
   
         const thisUser = await authorizeUser(user)
