@@ -1,5 +1,7 @@
 import jwt from "jsonwebtoken";
 import { graphqlUploadExpress } from "graphql-upload";
+import express from "express";
+import path from "path";
 
 async function decodeToken(token) {
   const arr = token.split(" ");
@@ -32,4 +34,8 @@ async function auth(req, res, next) {
 export default (app) => {
   app.use(auth);
   app.use(graphqlUploadExpress());
+  console.log("__dirname :", __dirname);
+  // path.join(process.cwd(), `/src/public/`);
+
+  app.use(express.static(path.join(process.cwd(), `/src/public/`)));
 };
