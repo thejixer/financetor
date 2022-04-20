@@ -9,7 +9,17 @@ export default {
     
   },
   Query: {
+    getMyTags: (_, data, {user}) => {
+      try {
+  
+        const thisUser = await authorizeUser(user)
 
+        return await Tag.findUserTags(thisUser._id)
+
+      } catch (error) {
+        return []
+      }
+    }
   },
   Mutation: {
     create_tag: async (_, { data }, { user }) => {

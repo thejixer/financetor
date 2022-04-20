@@ -49,7 +49,14 @@ export default {
     }
   },
   Query: {
-
+    getMyExpenses: async (_, data, { user }) => {
+      try {
+        const thisUser = await authorizeUser(user)
+        return Expense.findUserExpenses(thisUser._id)
+      } catch (error) {
+        return []
+      }
+    }
   },
   Mutation: {
     create_expense: async (_, {data}, {user}) => {

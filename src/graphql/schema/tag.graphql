@@ -10,9 +10,9 @@ input tagInfo {
   color: String!
 }
 
-# type Query {
-
-# }
+type Query {
+  getMyTags: [Tag!]
+}
 
 
 type Mutation {
