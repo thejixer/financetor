@@ -12,7 +12,7 @@ input ExpenseInfo {
   geo: GeoInput!
   tags: [ID!]!
   date: Date!
-  address: AddressInput!
+  address: AddressInput
 }
 
 type Query {
