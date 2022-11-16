@@ -33,7 +33,7 @@ class UserSchema {
 
       const ifuserexists = allUsers.some((item) => item.username === username);
 
-      if (ifuserexists) throw new Error("this is username already exists");
+      if (ifuserexists) throw new Error("this username already exists");
 
       const salt = genSaltSync(9);
       const hash = hashSync(password, salt);
