@@ -85,6 +85,20 @@ class TagSchema {
     }
     
   }
+
+  async deleteById({ userId, _id }) {
+    try {
+
+      unlinkSync(path.join(userDirectory, `/${userId}/tags/${_id}.txt`))
+
+      return true
+      
+    } catch (error) {
+      console.log(error)
+      throw new Error('no')
+    }
+  }
+
 }
 
 const Tag = new TagSchema()

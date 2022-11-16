@@ -12,29 +12,24 @@ const userDirectory = path.join(process.cwd(), "/src/db/users");
 class ExpenseSchema {
   constructor() {}
 
-  async create({ amount, tags, geo,address, userId, date }) {
+  async create({ amount, tag, geo,address, userId, date }) {
     try {
       if (
         !amount ||
-        !tags ||
-        !Array.isArray(tags) ||
+        !tag ||
         !geo ||
         !geo.lat ||
         !geo.lon ||
         !userId
       )
         throw new Error("bad input");
-      const data = { amount, tags, geo,address, date, _id: UID() };
+      const data = { amount, tag, geo,address, date, _id: UID() };
 
       const userTags = await Tag.findUserTags(userId);
 
       const cache = {};
 
       userTags.forEach((item) => (cache[item._id] = item));
-
-      const doIContinue = tags.every((item) => !!cache[item]);
-
-      if (!doIContinue) throw new Error("invalid tags");
 
       const dest = `${userDirectory}/${userId}/expenses`;
 
@@ -54,22 +49,29 @@ class ExpenseSchema {
     try {
       if (!existsSync(`${userDirectory}/${_id}/expenses`)) return [];
 
-      const x = readdirSync(`${userDirectory}/${_id}/expenses`).reduce(
-        (acc, cur, i) =>
-          acc +
-          `${i == 0 ? "" : ","}` +
-          readFileSync(path.join(`${userDirectory}/${_id}/expenses`, `/${cur}`), {
-            encoding: "utf8",
-          }),
-        "["
-      );
-      const y = `${x}]`;
+      const theseExpenses = readdirSync(`${userDirectory}/${_id}/expenses`).map(item => {
+        return readFileSync(path.join(`${userDirectory}/${_id}/expenses/`, item), {
+          encoding: "utf8",
+        })
+      })
 
-      const result = JSON.parse(y);
+      // const x = readdirSync(`${userDirectory}/${_id}/expenses`).reduce(
+      //   (acc, cur, i) =>
+      //     acc +
+      //     `${i == 0 ? "" : ","}` +
+      //     readFileSync(path.join(`${userDirectory}/${_id}/expenses`, `/${cur}`), {
+      //       encoding: "utf8",
+      //     }),
+      //   "["
+      // );
+      // const y = `${x}]`;
 
-      return result;
+      // const result = JSON.parse(y);
+
+      return theseExpenses;
     } catch (error) {
-      throw error;
+      return []
+      // throw error;
     }
   }
 
@@ -85,7 +87,8 @@ class ExpenseSchema {
     }
   }
 
-  async deleteById({_id, userId}) {
+  async deleteById({ _id, userId }) {
+    
     try {
 
       unlinkSync(path.join(userDirectory, `/${userId}/expenses/${_id}.txt`))
@@ -97,6 +100,24 @@ class ExpenseSchema {
       throw new Error('no')
     }
   }
+
+  async findByIdAndUpdate({ _id, data, userId }) {
+    
+    try {
+      
+      const thisExpense = await this.findById(_id)
+
+      Object.entries(data).forEach(([key, value]) => thisExpense[key] = value)
+
+      writeFileSync(`${userDirectory}/${userId}/expenses/${_id}.txt`, JSON.stringify(thisExpense), "utf8")
+
+      return true
+
+    } catch (error) {
+      throw error
+    }
+  }
+
 }
 
 const Expense = new ExpenseSchema();

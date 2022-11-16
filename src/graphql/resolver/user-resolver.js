@@ -44,12 +44,11 @@ export default {
       }
     },
     editMe: async (_, { name, img }, { user }) => {
-      console.log("************");
-      console.log(img);
-      console.log(name);
 
       let imgurl;
+      
       try {
+
         const thisuser = await authorizeUser(user);
 
         imgurl = thisuser.img;
@@ -57,14 +56,14 @@ export default {
         if (img) {
           const { createReadStream, mimetype } = await img;
           const wtf = mimetype.split("/")[1];
-          if (wtf !== "jpeg" && wtf !== "jpg" && wtf !== "png")
-            throw new Error("bad request: Invalid file type");
+          if (wtf !== "jpeg" && wtf !== "jpg" && wtf !== "png") throw new Error("bad request: Invalid file type");
           const stream = createReadStream();
           // await storeImageUpload({ stream, userId: thisuser._id });
-          imgurl = `${thisuser._id}.${wtf}`;
-          const out = createWriteStream(
-            path.join(process.cwd(), `/src/public/${thisuser._id}.${wtf}`)
-          );
+          const randomNumber = `${new Date().getTime()}${String(Math.random()).slice(3, 8)}`
+          
+          imgurl = `${randomNumber}.${wtf}`;
+          const out = createWriteStream(path.join(process.cwd(), `/src/public/${randomNumber}.${wtf}`));
+          
           stream.pipe(out);
           await finished(out);
         }

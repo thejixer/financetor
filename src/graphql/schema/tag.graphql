@@ -3,6 +3,7 @@ type Tag {
   _id: ID!
   name: String!
   color: String!
+  expenseCount: Int!
 }
 
 input tagInfo {
@@ -18,4 +19,5 @@ type Query {
 type Mutation {
   create_tag(data: tagInfo!): Status!
   edit_tag(_id: ID!, data: tagInfo!): Status!
+  delete_tag(_id: ID!): Status!
 }

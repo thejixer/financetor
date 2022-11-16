@@ -9,7 +9,8 @@ import Tag from '../../models/tag'
 export default {
   root: {
     Me: {
-      myExpenses: async (_, data, {user}) => {
+      myExpenses: async (_, data, { user }) => {
+        
         try {
           const thisUser = await authorizeUser(user)
           return Expense.findUserExpenses(thisUser._id)
@@ -19,8 +20,6 @@ export default {
       },
       myTags: async (_, data, { user }) => {
 
-
-        
         try {
   
           const thisUser = await authorizeUser(user)
@@ -33,14 +32,14 @@ export default {
       }
     },
     Expense: {
-      tags: async ({ tags }, _, {user}) => {
+      tag: async ({ tag }, _, { user }) => {
+        
         try {
           const thisUser = await authorizeUser(user)
 
           const userTags = await Tag.findUserTags(thisUser._id)
 
-          // const zxc = await Promise.all(findUserTags.map(_id => ))
-          return tags.map(_id => userTags.find(item => item._id == _id))
+          return userTags.find(item => item._id == tag)
 
         } catch (error) {
           throw error
@@ -64,6 +63,11 @@ export default {
       try {
         
         const thisUser = await authorizeUser(user)
+        const userTags = await Tag.findUserTags(thisUser._id)
+
+        const isTagThere = userTags.some(item => item._id == data.tag)
+
+        if (!isTagThere) throw new Error('invalid tag')
 
         await Expense.create({ userId: thisUser._id, ...data })
         
@@ -71,8 +75,6 @@ export default {
           status: 200,
           msg: 'ok'
         }
-
-
 
       } catch (error) {
         throw error
@@ -93,6 +95,30 @@ export default {
       } catch (error) {
         throw error
       }
+    },
+    edit_expense: async (_, { _id, data }, { user }) => {
+      
+      try {
+        
+        const thisUser = await authorizeUser(user)
+
+        const userTags = await Tag.findUserTags(thisUser._id)
+
+        const isTagThere = userTags.some(item => item._id == data.tag)
+
+        if (!isTagThere) throw new Error('invalid tag')
+
+        await Expense.findByIdAndUpdate({ _id, data, userId: thisUser._id })
+        
+        return {
+          msg: 'ok',
+          status: 200
+        }
+
+      } catch (error) {
+        throw error
+      }
+
     }
   }
 }
