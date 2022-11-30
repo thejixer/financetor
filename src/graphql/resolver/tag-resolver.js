@@ -78,9 +78,12 @@ export default {
 
         const allExpenses = await Expense.findUserExpenses(thisUser._id);
 
+        console.log("allExpenses : ", allExpenses)
         const thseExpenses = allExpenses.filter(item => item.tag == _id);
+        console.log("thseExpenses : ", thseExpenses)
 
         for (let thisExpense of thseExpenses) {
+          console.log("thisExpense : ", thisExpense)
           await Expense.deleteById({ userId: thisUser._id, _id: thisExpense._id });
         }
         
