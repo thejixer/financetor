@@ -46,32 +46,20 @@ class ExpenseSchema {
   }
 
   async findUserExpenses(_id) {
+
     try {
+      
       if (!existsSync(`${userDirectory}/${_id}/expenses`)) return [];
 
       const theseExpenses = readdirSync(`${userDirectory}/${_id}/expenses`).map(item => {
-        return readFileSync(path.join(`${userDirectory}/${_id}/expenses/`, item), {
+        return JSON.parse(readFileSync(path.join(`${userDirectory}/${_id}/expenses/`, item), {
           encoding: "utf8",
-        })
+        }))
       })
-
-      // const x = readdirSync(`${userDirectory}/${_id}/expenses`).reduce(
-      //   (acc, cur, i) =>
-      //     acc +
-      //     `${i == 0 ? "" : ","}` +
-      //     readFileSync(path.join(`${userDirectory}/${_id}/expenses`, `/${cur}`), {
-      //       encoding: "utf8",
-      //     }),
-      //   "["
-      // );
-      // const y = `${x}]`;
-
-      // const result = JSON.parse(y);
 
       return theseExpenses;
     } catch (error) {
       return []
-      // throw error;
     }
   }
 

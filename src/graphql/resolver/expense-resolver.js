@@ -1,6 +1,3 @@
-
-
-
 import Expense from '../../models/expense'
 import authorizeUser from '../../lib/auth'
 
@@ -13,7 +10,8 @@ export default {
         
         try {
           const thisUser = await authorizeUser(user)
-          return Expense.findUserExpenses(thisUser._id)
+          return await Expense.findUserExpenses(thisUser._id) 
+
         } catch (error) {
           return []
         }
