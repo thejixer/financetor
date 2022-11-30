@@ -5,4 +5,4 @@ import resolvers from './graphql/resolver'
 
 const typeDefs = buildSchema()
 
-runServer({ typeDefs, resolvers, port: 80 })
+runServer({ typeDefs, resolvers, port: 80 });
