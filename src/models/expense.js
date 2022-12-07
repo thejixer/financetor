@@ -93,8 +93,8 @@ class ExpenseSchema {
     
     try {
       
-      const thisExpense = await this.findById(_id)
-
+      const thisExpense = await this.findById({ _id, userId })
+      
       Object.entries(data).forEach(([key, value]) => thisExpense[key] = value)
 
       writeFileSync(`${userDirectory}/${userId}/expenses/${_id}.txt`, JSON.stringify(thisExpense), "utf8")
